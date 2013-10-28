@@ -1,0 +1,8 @@
+import pl.maciejwalkowiak.drools.App;
+
+rule "Hello world"
+when
+    $app : App()
+then
+    $app.helloWorld();
+end
