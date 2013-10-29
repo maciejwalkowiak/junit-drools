@@ -1,5 +1,25 @@
 ##junit-drools##
 
+**Under development**
+
+Tiny little library that helps you to unit test your Drools based business rules.
+
+### Installation ###
+
+1. Clone git repository: `git clone https://github.com/maciejwalkowiak/junit-drools.git`
+2. Build & install: `mvn clean install`
+3. Add dependency to your pom.xml:
+    ```xml
+    <dependency>
+        <groupId>pl.maciejwalkowiak</groupId>
+        <artifactId>junit-drools</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <scope>test</scope>
+    </dependency>
+    ```
+    
+### Example unit test ###
+
 JUnit + JBoss Drools integration
 
 	import org.drools.StatefulSession;
