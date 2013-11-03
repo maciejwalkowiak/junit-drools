@@ -4,6 +4,13 @@
 
 Tiny little library that helps you to unit test your Drools based business rules.
 
+
+### Preface ###
+
+Testing Drools rules can be annoying. Framework itself does not contain any helper classes or JUnit integrations that saves us from writing lots of boilerplate code in each test unit class. **junit-drools**'s goal is to fix it and make testing Drools easy.
+
+I am not very experienced with Drools so the library actually does what was needed in project I was working with. You are welcome to add your improvements by sending pull requests.
+
 ### Installation ###
 
 1. Clone git repository: `git clone https://github.com/maciejwalkowiak/junit-drools.git`
