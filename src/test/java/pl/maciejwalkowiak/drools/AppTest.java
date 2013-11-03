@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
 import pl.maciejwalkowiak.drools.annotations.DroolsSession;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(DroolsJUnitRunner.class)
 @DroolsFiles(value = "helloworld.drl", location = "/drl/")
@@ -16,10 +16,22 @@ public class AppTest {
     StatefulSession session;
 
     @Test
-    public void testApp() {
-        session.insert(new App());
+    public void should_set_discount() {
+        Purchase purchase = new Purchase(new Customer(17));
+
+        session.insert(purchase);
         session.fireAllRules();
 
-        assertNotNull(session);
+        assertTrue(purchase.getTicket().isDiscount());
+    }
+
+    @Test
+    public void should_not_set_discount() {
+        Purchase purchase = new Purchase(new Customer(22));
+
+        session.insert(purchase);
+        session.fireAllRules();
+
+        assertFalse(purchase.getTicket().isDiscount());
     }
 }
