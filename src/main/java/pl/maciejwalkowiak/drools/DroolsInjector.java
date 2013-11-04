@@ -22,6 +22,12 @@ public class DroolsInjector {
     private static final Logger LOG = LoggerFactory.getLogger(DroolsInjector.class);
 
     public void initDrools(Object testClass) throws Exception {
+        if (testClass == null) {
+            throw new IllegalArgumentException("Test class cannot be null");
+        }
+
+        LOG.info("Initializing Drools objects for test class: {}", testClass.getClass());
+
         DroolsAnnotationProcessor annotationProcessor = new DroolsAnnotationProcessor(testClass);
         DroolsFiles droolsFiles = annotationProcessor.getDroolsFiles();
 
@@ -31,6 +37,8 @@ public class DroolsInjector {
     }
 
     public DroolsSession initKnowledgeBase(String droolsLocation, Iterable<String> fileNames) throws Exception {
+        LOG.info("Initializing knowledge base for drl files located in: {} with names: {}", droolsLocation, fileNames);
+
         PackageBuilder builder = new PackageBuilder();
 
         for (String fileName : fileNames) {

@@ -2,6 +2,8 @@ package pl.maciejwalkowiak.drools;
 
 import org.drools.StatefulSession;
 import org.drools.base.RuleNameEqualsAgendaFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Can be injected instead of {@link StatefulSession} in test classes to improve readability in case if only basic methods are used
@@ -9,6 +11,8 @@ import org.drools.base.RuleNameEqualsAgendaFilter;
  * @author Maciej Walkowiak
  */
 public class DroolsSessionImpl implements DroolsSession {
+    private static final Logger LOG = LoggerFactory.getLogger(DroolsSessionImpl.class);
+
     private StatefulSession statefulSession;
 
     public DroolsSessionImpl(StatefulSession statefulSession) {
@@ -17,6 +21,8 @@ public class DroolsSessionImpl implements DroolsSession {
 
     @Override
     public void fire(String ruleName) {
+        LOG.debug("Firing rule: {}", ruleName);
+
         this.statefulSession.fireAllRules(new RuleNameEqualsAgendaFilter(ruleName));
     }
 
