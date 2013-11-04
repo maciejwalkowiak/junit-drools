@@ -2,7 +2,7 @@
 
 **Under development**
 
-Tiny little library that helps you to unit test your Drools based business rules.
+Tiny little library that helps you to unit test your Drools based business rules. Few simple annotations making Drools unit tests clean an easily maintainable.
 
 
 ### Preface ###
