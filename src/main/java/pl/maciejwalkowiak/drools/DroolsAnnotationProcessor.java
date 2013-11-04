@@ -5,6 +5,11 @@ import pl.maciejwalkowiak.drools.annotations.DroolsSession;
 
 import java.lang.reflect.Field;
 
+/**
+ * Processes test class annotations
+ *
+ * @author Maciej Walkowiak
+ */
 public class DroolsAnnotationProcessor {
     private Object testClass;
 

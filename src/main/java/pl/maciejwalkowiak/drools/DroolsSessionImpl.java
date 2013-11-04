@@ -3,6 +3,11 @@ package pl.maciejwalkowiak.drools;
 import org.drools.StatefulSession;
 import org.drools.base.RuleNameEqualsAgendaFilter;
 
+/**
+ * Can be injected instead of {@link StatefulSession} in test classes to improve readability in case if only basic methods are used
+ *
+ * @author Maciej Walkowiak
+ */
 public class DroolsSessionImpl implements DroolsSession {
     private StatefulSession statefulSession;
 

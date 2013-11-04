@@ -3,14 +3,24 @@ package pl.maciejwalkowiak.drools;
 import org.drools.RuleBase;
 import org.drools.RuleBaseFactory;
 import org.drools.StatefulSession;
+import org.drools.compiler.DroolsError;
 import org.drools.compiler.PackageBuilder;
 import org.drools.compiler.PackageBuilderErrors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
 
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+/**
+ * Initializes Drools knowledge base and {@link StatefulSession} and injects them to test class
+ *
+ * @author Maciej Walkowiak
+ */
 public class DroolsInjector {
+    private static final Logger LOG = LoggerFactory.getLogger(DroolsInjector.class);
+
     public void initDrools(Object testClass) throws Exception {
         DroolsAnnotationProcessor annotationProcessor = new DroolsAnnotationProcessor(testClass);
         DroolsFiles droolsFiles = annotationProcessor.getDroolsFiles();
@@ -31,7 +41,13 @@ public class DroolsInjector {
 
         // Make sure that there are no errors in knowledge base
         if (errors.getErrors().length > 0) {
-            throw new IllegalStateException();
+            LOG.error("Errors during loading DRL files");
+
+            for (DroolsError error : errors.getErrors()) {
+                LOG.error("Error: {}", error.getMessage());
+            }
+
+            throw new IllegalStateException("There are errors in DRL files");
         }
 
         RuleBase ruleBase  = RuleBaseFactory.newRuleBase();
