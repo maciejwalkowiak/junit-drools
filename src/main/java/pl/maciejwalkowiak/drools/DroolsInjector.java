@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
@@ -67,6 +68,11 @@ public class DroolsInjector {
     }
 
     private InputStreamReader loadDroolFile(String droolsLocation, String filename) {
-        return new InputStreamReader(getClass().getResourceAsStream(droolsLocation + filename));
+        InputStream stream = getClass().getResourceAsStream(droolsLocation + filename);
+
+        if (stream == null) {
+            throw new IllegalArgumentException("File not found in location: " + droolsLocation + filename + " not found");
+        }
+        return new InputStreamReader(stream);
     }
 }
