@@ -1,5 +1,7 @@
 ##junit-drools##
 
+[![Build Status](https://drone.io/github.com/maciejwalkowiak/junit-drools/status.png)](https://drone.io/github.com/maciejwalkowiak/junit-drools/latest)
+
 **Under development**
 
 Tiny little library that helps you to unit test your Drools based business rules. Few simple annotations making Drools unit tests clean an easily maintainable.
