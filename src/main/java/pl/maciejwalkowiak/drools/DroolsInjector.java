@@ -37,7 +37,7 @@ public class DroolsInjector {
         annotationProcessor.setDroolsSession(droolsSession);
     }
 
-    public DroolsSession initKnowledgeBase(String droolsLocation, Iterable<String> fileNames) throws Exception {
+    private DroolsSession initKnowledgeBase(String droolsLocation, Iterable<String> fileNames) throws Exception {
         LOG.info("Initializing knowledge base for drl files located in: {} with names: {}", droolsLocation, fileNames);
 
         PackageBuilder builder = new PackageBuilder();
