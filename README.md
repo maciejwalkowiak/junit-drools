@@ -45,13 +45,20 @@ I am not very experienced with Drools so the library actually does what was need
 
 1. Clone git repository: `git clone https://github.com/maciejwalkowiak/junit-drools.git`
 2. Build & install: `mvn clean install`
-3. Add dependency to your pom.xml:
+3. Add repository and dependency to your pom.xml:
+
+```
+    <repository>
+        <id>maciejwalkowiak.pl</id>
+        <url>https://github.com/maciejwalkowiak/maven-repo/raw/releases/</url>
+    </repository>
+```
         
 ```
     <dependency>
         <groupId>pl.maciejwalkowiak</groupId>
         <artifactId>junit-drools</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
         <scope>test</scope>
     </dependency>
 ```
