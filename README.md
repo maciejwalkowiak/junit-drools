@@ -123,3 +123,7 @@ In case you don't want to use DroolsJUnitRunner, for example because you already
             assertTrue(purchase.getTicket().isDiscount());
         }
     }
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/maciejwalkowiak/junit-drools/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
