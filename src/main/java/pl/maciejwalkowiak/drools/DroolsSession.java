@@ -1,6 +1,6 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.StatefulSession;
+import org.drools.core.StatefulSession;
 
 /**
  * Simplified interface of Drools {@link StatefulSession}

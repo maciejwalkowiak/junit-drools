@@ -1,6 +1,6 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.StatefulSession;
+import org.drools.core.StatefulSession;
 import org.junit.Before;
 import org.junit.Test;
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
