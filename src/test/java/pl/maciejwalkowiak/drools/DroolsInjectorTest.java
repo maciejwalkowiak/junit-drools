@@ -28,9 +28,10 @@ public class DroolsInjectorTest {
     public void foo() throws Exception {
         RulesWithErrorsTestClass testClass = new RulesWithErrorsTestClass();
 
-        catchException(new DroolsInjector()).initDrools(testClass);
-
+        catchException(new DroolsInjector()).initDrools(testClass);        
         assertThat(caughtException()).isInstanceOf(IllegalStateException.class).hasMessageContaining("errors in DRL files");
+        assertThat(caughtException()).hasMessageContaining("mismatched input");
+        
     }
 
     @DroolsFiles(value = "foo.drl", location = "/")
