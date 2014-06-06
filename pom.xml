@@ -72,23 +72,48 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 
-<!--         <extensions> -->
-<!--             <extension> -->
-<!--                 <groupId>ar.com.synergian</groupId> -->
-<!--                 <artifactId>wagon-git</artifactId> -->
-<!--                 <version>0.2.0</version> -->
-<!--             </extension> -->
-<!--         </extensions> -->
+
+        <extensions>
+            <extension>
+                <groupId>ar.com.synergian</groupId>
+                <artifactId>wagon-git</artifactId>
+                <version>0.2.0</version>
+            </extension>
+        </extensions>
     </build>
 
-<!--     <pluginRepositories> -->
-<!--         <pluginRepository> -->
-<!--             <id>synergian-repo</id> -->
-<!--             <url>https://raw.github.com/synergian/wagon-git/releases</url> -->
-<!--         </pluginRepository> -->
-<!--     </pluginRepositories> -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>synergian-repo</id>
+            <url>https://raw.github.com/synergian/wagon-git/releases</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <distributionManagement>
         <repository>
