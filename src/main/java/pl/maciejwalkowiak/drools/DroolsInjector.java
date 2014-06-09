@@ -1,11 +1,11 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.RuleBase;
-import org.drools.RuleBaseFactory;
-import org.drools.StatefulSession;
-import org.drools.compiler.DroolsError;
-import org.drools.compiler.PackageBuilder;
-import org.drools.compiler.PackageBuilderErrors;
+import org.drools.compiler.compiler.DroolsError;
+import org.drools.compiler.compiler.PackageBuilder;
+import org.drools.compiler.compiler.PackageBuilderErrors;
+import org.drools.core.RuleBase;
+import org.drools.core.RuleBaseFactory;
+import org.drools.core.StatefulSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;

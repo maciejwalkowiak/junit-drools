@@ -1,7 +1,7 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.StatefulSession;
-import org.drools.base.RuleNameEqualsAgendaFilter;
+import org.drools.core.StatefulSession;
+import org.drools.core.base.RuleNameEqualsAgendaFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
