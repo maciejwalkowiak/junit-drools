@@ -55,8 +55,7 @@ public class DroolsInjector {
 
             for (DroolsError error : errors.getErrors()) {
                 LOG.error("Error: {}", error.getMessage());
-                errorMessages.append(error.getMessage());
-                errorMessages.append("\n");
+                errorMessages.append(error.getMessage());                
                 
             }
 
