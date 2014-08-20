@@ -13,11 +13,18 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface DroolsFiles {
+
     /**
      * DRL file names
      * @return
      */
     String[] value();
+
+    /**
+     * DSL file names
+     * @return
+     */
+    String dsl() default "";
 
     /**
      * DRL files location relative to src/test/resources or src/main/resources

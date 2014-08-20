@@ -32,20 +32,28 @@ public class DroolsInjector {
         DroolsAnnotationProcessor annotationProcessor = new DroolsAnnotationProcessor(testClass);
         DroolsFiles droolsFiles = annotationProcessor.getDroolsFiles();
 
-        DroolsSession droolsSession = initKnowledgeBase(droolsFiles.location(), Arrays.asList(droolsFiles.value()));
+        DroolsSession droolsSession = 
+          initKnowledgeBase(droolsFiles.location(), droolsFiles.dsl(), Arrays.asList(droolsFiles.value()));
 
         annotationProcessor.setDroolsSession(droolsSession);
     }
 
-    private DroolsSession initKnowledgeBase(String droolsLocation, Iterable<String> fileNames) throws Exception {
-        LOG.info("Initializing knowledge base for drl files located in: {} with names: {}", droolsLocation, fileNames);
+    private DroolsSession initKnowledgeBase(String droolsLocation, String dsl, Iterable<String> fileNames) throws Exception {
+        LOG.info("Initializing knowledge base for drl files located in: {} dsl: {} with names: {}", droolsLocation, dsl, fileNames);
 
         PackageBuilder builder = new PackageBuilder();
 
-        for (String fileName : fileNames) {
-            builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName));
+        if( dsl == null || dsl.equals("")) {
+            for (String fileName : fileNames) {
+                builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName));
+            }
+        } else {
+            InputStreamReader dslStream = loadDroolFile(droolsLocation, dsl);
+            for (String fileName : fileNames) {
+                builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName), dslStream);
+            }
+            dslStream.close();
         }
-
         PackageBuilderErrors errors = builder.getErrors();
 
         // Make sure that there are no errors in knowledge base
