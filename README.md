@@ -96,7 +96,7 @@ Lets consider following example:
     }
 
 - **@RunWith(DroolsJUnitRunner)** - inits JUnit runner for testing drools rules
-- **@DroolsFiles** - set location of drl files (can be one or multiple) - drl files have to be on class path - **@DroolsFiles#location** is relative to ```src/test/resources``` or ```src/main/resources```
+- **@DroolsFiles** - set location of drl files (can be one or multiple) - drl files have to be on class path - **@DroolsFiles#dsl is an optional DSL used for building the drl files - **@DroolsFiles#location** is relative to ```src/test/resources``` or ```src/main/resources```
 - **@DroolsSession** - autoinjects Drools session to your test before execution
 
 Find full example with drl file in [src/test](https://github.com/maciejwalkowiak/junit-drools/tree/master/src/test) directory of the project
