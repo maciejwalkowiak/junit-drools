@@ -39,20 +39,20 @@ public class DroolsInjector {
     }
 
     private DroolsSession initKnowledgeBase(String droolsLocation, String dsl, Iterable<String> fileNames) throws Exception {
-        LOG.info("Initializing knowledge base for drl files located in: {} dsl: {} with names: {}", droolsLocation, dsl, fileNames);
 
         PackageBuilder builder = new PackageBuilder();
 
         if( dsl == null || dsl.equals("")) {
+            LOG.info("Initializing knowledge base for drl files located in {} with names: {}", droolsLocation, fileNames);
             for (String fileName : fileNames) {
                 builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName));
             }
         } else {
-            InputStreamReader dslStream = loadDroolFile(droolsLocation, dsl);
+            LOG.info("Initializing knowledge base for drl files located in {} with dsl {}  with names: {}", droolsLocation, dsl, fileNames);
             for (String fileName : fileNames) {
-                builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName), dslStream);
+                builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName),
+                                          loadDroolFile(droolsLocation, dsl) );
             }
-            dslStream.close();
         }
         PackageBuilderErrors errors = builder.getErrors();
 
@@ -79,7 +79,7 @@ public class DroolsInjector {
         InputStream stream = getClass().getResourceAsStream(droolsLocation + filename);
 
         if (stream == null) {
-            throw new IllegalArgumentException("File not found in location: " + droolsLocation + filename + " not found");
+            throw new IllegalArgumentException("File not found in location: " + droolsLocation + filename);
         }
         return new InputStreamReader(stream);
     }
