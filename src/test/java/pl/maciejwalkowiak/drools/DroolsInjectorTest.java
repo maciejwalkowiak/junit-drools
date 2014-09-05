@@ -25,6 +25,15 @@ public class DroolsInjectorTest {
     }
 
     @Test
+    public void should_throw_exception_for_dsl_file_not_found() throws Exception {
+        NotExistingDslFileTestClass testClass = new NotExistingDslFileTestClass();
+
+        catchException(new DroolsInjector()).initDrools(testClass);
+
+        assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("not found");
+    }
+
+    @Test
     public void foo() throws Exception {
         RulesWithErrorsTestClass testClass = new RulesWithErrorsTestClass();
 
@@ -35,6 +44,11 @@ public class DroolsInjectorTest {
 
     @DroolsFiles(value = "foo.drl", location = "/")
     private static class NotExistingFileTestClass {
+
+    }
+
+    @DroolsFiles(value = "rules-with-errors.drl", location = "/", dsl = "foo.dsl")
+    private static class NotExistingDslFileTestClass {
 
     }
 
