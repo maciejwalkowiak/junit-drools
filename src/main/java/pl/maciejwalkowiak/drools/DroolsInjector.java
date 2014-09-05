@@ -42,7 +42,7 @@ public class DroolsInjector {
 
         PackageBuilder builder = new PackageBuilder();
 
-        if( dsl == null || dsl.equals("")) {
+        if(dsl == null || dsl.equals("")) {
             LOG.info("Initializing knowledge base for drl files located in {} with names: {}", droolsLocation, fileNames);
             for (String fileName : fileNames) {
                 builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName));

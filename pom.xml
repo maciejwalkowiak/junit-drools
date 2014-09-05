@@ -83,6 +83,13 @@
         </extensions>
     </build>
 
+	<repositories>
+		<repository>
+			<id>JBoss Maven Repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>synergian-repo</id>
