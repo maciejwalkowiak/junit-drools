@@ -32,20 +32,28 @@ public class DroolsInjector {
         DroolsAnnotationProcessor annotationProcessor = new DroolsAnnotationProcessor(testClass);
         DroolsFiles droolsFiles = annotationProcessor.getDroolsFiles();
 
-        DroolsSession droolsSession = initKnowledgeBase(droolsFiles.location(), Arrays.asList(droolsFiles.value()));
+        DroolsSession droolsSession = 
+          initKnowledgeBase(droolsFiles.location(), droolsFiles.dsl(), Arrays.asList(droolsFiles.value()));
 
         annotationProcessor.setDroolsSession(droolsSession);
     }
 
-    private DroolsSession initKnowledgeBase(String droolsLocation, Iterable<String> fileNames) throws Exception {
-        LOG.info("Initializing knowledge base for drl files located in: {} with names: {}", droolsLocation, fileNames);
+    private DroolsSession initKnowledgeBase(String droolsLocation, String dsl, Iterable<String> fileNames) throws Exception {
 
         PackageBuilder builder = new PackageBuilder();
 
-        for (String fileName : fileNames) {
-            builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName));
+        if( dsl == null || dsl.equals("")) {
+            LOG.info("Initializing knowledge base for drl files located in {} with names: {}", droolsLocation, fileNames);
+            for (String fileName : fileNames) {
+                builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName));
+            }
+        } else {
+            LOG.info("Initializing knowledge base for drl files located in {} with dsl {}  with names: {}", droolsLocation, dsl, fileNames);
+            for (String fileName : fileNames) {
+                builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName),
+                                          loadDroolFile(droolsLocation, dsl) );
+            }
         }
-
         PackageBuilderErrors errors = builder.getErrors();
 
         // Make sure that there are no errors in knowledge base
@@ -71,7 +79,7 @@ public class DroolsInjector {
         InputStream stream = getClass().getResourceAsStream(droolsLocation + filename);
 
         if (stream == null) {
-            throw new IllegalArgumentException("File not found in location: " + droolsLocation + filename + " not found");
+            throw new IllegalArgumentException("File not found in location: " + droolsLocation + filename);
         }
         return new InputStreamReader(stream);
     }
