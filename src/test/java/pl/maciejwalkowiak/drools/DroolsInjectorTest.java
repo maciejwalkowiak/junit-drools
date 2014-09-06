@@ -13,6 +13,7 @@ public class DroolsInjectorTest {
         catchException(new DroolsInjector()).initDrools(null);
 
         assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("null");
+        System.out.println(caughtException());
     }
 
     @Test
@@ -22,6 +23,7 @@ public class DroolsInjectorTest {
         catchException(new DroolsInjector()).initDrools(testClass);
 
         assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("not found");
+        System.out.println(caughtException());
     }
 
     @Test
@@ -37,9 +39,11 @@ public class DroolsInjectorTest {
     public void foo() throws Exception {
         RulesWithErrorsTestClass testClass = new RulesWithErrorsTestClass();
 
-        catchException(new DroolsInjector()).initDrools(testClass);
-
+        catchException(new DroolsInjector()).initDrools(testClass);        
         assertThat(caughtException()).isInstanceOf(IllegalStateException.class).hasMessageContaining("errors in DRL files");
+        assertThat(caughtException()).hasMessageContaining("mismatched input");
+        System.out.println(caughtException());
+        
     }
 
     @DroolsFiles(value = "foo.drl", location = "/")

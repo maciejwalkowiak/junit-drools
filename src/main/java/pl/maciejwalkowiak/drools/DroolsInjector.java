@@ -57,14 +57,17 @@ public class DroolsInjector {
         PackageBuilderErrors errors = builder.getErrors();
 
         // Make sure that there are no errors in knowledge base
+        StringBuffer errorMessages = new StringBuffer();
         if (errors.getErrors().length > 0) {
             LOG.error("Errors during loading DRL files");
 
             for (DroolsError error : errors.getErrors()) {
                 LOG.error("Error: {}", error.getMessage());
+                errorMessages.append(error.getMessage());                
+                
             }
 
-            throw new IllegalStateException("There are errors in DRL files");
+            throw new IllegalStateException("There are errors in DRL files : " + errorMessages.toString());
         }
 
         RuleBase ruleBase  = RuleBaseFactory.newRuleBase();
