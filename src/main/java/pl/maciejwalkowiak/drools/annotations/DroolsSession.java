@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Used to inject Drools {@link org.drools.StatefulSession}
+ * Used to inject Drools {@link org.kie.api.runtime.KieSession}
  * or {@link pl.maciejwalkowiak.drools.DroolsSession} depending on what type annotated property is
  *
  * @author Maciej Walkowiak

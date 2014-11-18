@@ -56,7 +56,7 @@ I am not very experienced with Drools so the library actually does what was need
     <dependency>
         <groupId>pl.maciejwalkowiak</groupId>
         <artifactId>junit-drools</artifactId>
-        <version>1.0</version>
+        <version>2.0</version>
         <scope>test</scope>
     </dependency>
 ```
@@ -72,7 +72,7 @@ Lets consider following example:
     public class AppTest {
     
         @DroolsSession
-        StatefulSession session;
+        KieSession session;
     
         @Test
         public void should_set_discount() {
@@ -97,8 +97,8 @@ Lets consider following example:
 
 - **@RunWith(DroolsJUnitRunner)** - inits JUnit runner for testing drools rules
 - **@DroolsFiles** - for specifying the content for the rules session
-  - **@DroolsFiles#value** is a set of drl files. drl files have to be on class path
-  - **@DroolsFiles#dsl** is an optional DSL used for building the drl files
+  - **@DroolsFiles#value** is a set of drl or dslr files. files have to be on class path
+  - **@DroolsFiles#dsl** is an optional DSL used for building the dslr files
   - **@DroolsFiles#location** is relative to ```src/test/resources``` or ```src/main/resources```
 - **@DroolsSession** - autoinjects Drools session to your test before execution
 
@@ -109,7 +109,7 @@ In case you don't want to use DroolsJUnitRunner, for example because you already
     @DroolsFiles(value = "helloworld.drl", location = "/drl/")
     public class BeforeMethodBasedTest {
         @DroolsSession
-        StatefulSession session;
+        KieSession session;
     
         @Before
         public void initDrools() throws Exception {
