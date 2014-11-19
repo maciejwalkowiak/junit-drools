@@ -29,27 +29,21 @@ public class DroolsAnnotationProcessor {
         return droolsFiles;
     }
 
-    List<Field> getAllFields() {
-        List<Field> allFields = new LinkedList<Field>();
+    public void setDroolsSession(pl.maciejwalkowiak.drools.DroolsSession droolsSession) {
         Class<?> klass = testClass.getClass();
         while (klass != null) {
-            allFields.addAll(Arrays.asList(klass.getDeclaredFields()));
-            klass = klass.getSuperclass();
-        }
-        return allFields;
-    }
-
-    public void setDroolsSession(pl.maciejwalkowiak.drools.DroolsSession droolsSession) {
-        for (Field field : getAllFields()) {
-            field.setAccessible(true);
-            if (field.isAnnotationPresent(DroolsSession.class)) {
-                Object value = getValueToSet(droolsSession, field);
-                try {
-                    field.set(testClass, value);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
+            for (Field field : klass.getDeclaredFields()) {
+                if (field.isAnnotationPresent(DroolsSession.class)) {
+                    field.setAccessible(true);
+                    Object value = getValueToSet(droolsSession, field);
+                    try {
+                        field.set(testClass, value);
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
+            klass = klass.getSuperclass();
         }
     }
 
