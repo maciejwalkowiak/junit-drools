@@ -1,19 +1,19 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.core.StatefulSession;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
 import pl.maciejwalkowiak.drools.annotations.DroolsSession;
-
-import static org.junit.Assert.*;
 
 @RunWith(DroolsJUnitRunner.class)
 @DroolsFiles(value = "helloworld.drl", location = "/drl/")
 public class RunnerBasedTest {
 
-    @DroolsSession
-    StatefulSession session;
+    @DroolsSession KieSession session;
 
     @Test
     public void should_set_discount() {
