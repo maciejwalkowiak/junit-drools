@@ -1,7 +1,8 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.core.StatefulSession;
 import org.drools.core.base.RuleNameEqualsAgendaFilter;
+import org.kie.api.runtime.KieSession;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +14,9 @@ import org.slf4j.LoggerFactory;
 public class DroolsSessionImpl implements DroolsSession {
     private static final Logger LOG = LoggerFactory.getLogger(DroolsSessionImpl.class);
 
-    private StatefulSession statefulSession;
+    private StatefulKnowledgeSession statefulSession;
 
-    public DroolsSessionImpl(StatefulSession statefulSession) {
+    public DroolsSessionImpl(StatefulKnowledgeSession statefulSession) {
         this.statefulSession = statefulSession;
     }
 
@@ -37,7 +38,7 @@ public class DroolsSessionImpl implements DroolsSession {
     }
 
     @Override
-    public StatefulSession getStatefulSession() {
+    public StatefulKnowledgeSession getStatefulSession() {
         return statefulSession;
     }
 }

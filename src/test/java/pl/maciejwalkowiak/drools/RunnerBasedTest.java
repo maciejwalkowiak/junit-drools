@@ -1,11 +1,11 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.core.StatefulSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
+
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
 import pl.maciejwalkowiak.drools.annotations.DroolsSession;
-
 import static org.junit.Assert.*;
 
 @RunWith(DroolsJUnitRunner.class)
@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class RunnerBasedTest {
 
     @DroolsSession
-    StatefulSession session;
+    StatefulKnowledgeSession session;
 
     @Test
     public void should_set_discount() {
