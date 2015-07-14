@@ -1,6 +1,6 @@
 ##junit-drools##
 
-[![Build Status](https://drone.io/github.com/daveallie/junit-drools/status.png)](https://drone.io/github.com/daveallie/junit-drools/latest) ![Dependency Badge](https://www.versioneye.com/user/projects/55a3c7bc3239390018000717/badge.svg?style=flat) [![JitPack Link](https://img.shields.io/github/tag/daveallie/junit-drools.svg?label=JitPack)](https://jitpack.io/#daveallie/junit-drools/1.1.0)
+[![Codeship Status for daveallie/junit-drools](https://img.shields.io/codeship/46577080-0c5e-0133-fbe0-46840019e268/master.svg)](https://codeship.com/projects/91062) ![Dependency Badge](https://www.versioneye.com/user/projects/55a3c7bc3239390018000717/badge.svg?style=flat) [![JitPack Link](https://img.shields.io/github/tag/daveallie/junit-drools.svg?label=JitPack)](https://jitpack.io/#daveallie/junit-drools/1.1.0)
 
 Tiny little library that helps you to unit test your Drools based business rules. Few simple annotations making Drools unit tests clean an easily maintainable.
 
