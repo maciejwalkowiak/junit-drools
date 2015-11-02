@@ -24,14 +24,21 @@ import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
  * @author Maciej Walkowiak
  */
 public class DroolsInjector {
-    private static final Logger LOG = LoggerFactory.getLogger(DroolsInjector.class);
+    private static Logger LOG = LoggerFactory.getLogger(DroolsInjector.class);
+    private static boolean logEnabled = true;
+
+    public void initDrools(Object testClass, boolean disableLog) throws Exception {
+        logEnabled = !disableLog;
+        initDrools(testClass);
+    }
 
     public void initDrools(Object testClass) throws Exception {
         if (testClass == null) {
             throw new IllegalArgumentException("Test class cannot be null");
         }
 
-        LOG.info("Initializing Drools objects for test class: {}", testClass.getClass());
+        if (logEnabled)
+            LOG.info("Initializing Drools objects for test class: {}", testClass.getClass());
 
         DroolsAnnotationProcessor annotationProcessor = new DroolsAnnotationProcessor(testClass);
         DroolsFiles droolsFiles = annotationProcessor.getDroolsFiles();
@@ -48,13 +55,15 @@ public class DroolsInjector {
     	KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
     	
         if(dsl == null || dsl.equals("")) {
-            LOG.info("Initializing knowledge base for drl files located in {} with names: {}", droolsLocation, fileNames);
+            if (logEnabled)
+                LOG.info("Initializing knowledge base for drl files located in {} with names: {}", droolsLocation, fileNames);
             for (String fileName : fileNames) {
             	kieFileSystem.write(
             		ResourceFactory.newFileResource( loadDroolFileAsFile(droolsLocation, fileName) ));
             }
         } else {
-            LOG.info("Initializing knowledge base for drl files located in {} with dsl {}  with names: {}", droolsLocation, dsl, fileNames);
+            if (logEnabled)
+                LOG.info("Initializing knowledge base for drl files located in {} with dsl {}  with names: {}", droolsLocation, dsl, fileNames);
             for (String fileName : fileNames) {
             	kieFileSystem
             		.write(
@@ -68,10 +77,12 @@ public class DroolsInjector {
 
         // Make sure that there are no errors in knowledge base
     	if (kieBuilder.getResults().hasMessages(Level.ERROR)) {
-    		LOG.error("Errors during loading DRL files");
-    		
-            for (Message error : kieBuilder.getResults().getMessages(Level.ERROR)) {
-                LOG.error("Error: {}", error);
+            if (logEnabled) {
+                LOG.error("Errors during loading DRL files");
+
+                for (Message error : kieBuilder.getResults().getMessages(Level.ERROR)) {
+                    LOG.error("Error: {}", error);
+                }
             }
 
             throw new IllegalStateException("There are errors in DRL files");
