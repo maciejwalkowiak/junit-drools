@@ -25,10 +25,10 @@ import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
  */
 public class DroolsInjector {
     private static Logger LOG = LoggerFactory.getLogger(DroolsInjector.class);
-    private static boolean logEnabled = true;
+    private static boolean logEnabled = false;
 
-    public void initDrools(Object testClass, boolean disableLog) throws Exception {
-        logEnabled = !disableLog;
+    public void initDrools(Object testClass, boolean enableLog) throws Exception {
+        logEnabled = enableLog;
         initDrools(testClass);
     }
 
