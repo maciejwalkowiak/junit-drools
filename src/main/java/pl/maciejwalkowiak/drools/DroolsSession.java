@@ -1,6 +1,6 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.core.StatefulSession;
+import org.kie.internal.runtime.StatelessKnowledgeSession;
 
 /**
  * Simplified interface of Drools {@link StatefulSession}
@@ -10,9 +10,7 @@ import org.drools.core.StatefulSession;
 public interface DroolsSession {
     void fire(String ruleName);
 
-    void fireAllRules();
+    void execute(Object object);
 
-    void insert(Object object);
-
-    StatefulSession getStatefulSession();
+    StatelessKnowledgeSession getSession();
 }
