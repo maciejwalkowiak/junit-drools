@@ -4,14 +4,14 @@
 
     <groupId>pl.maciejwalkowiak</groupId>
     <artifactId>junit-drools</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>junit-drools</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <drools.version>6.0.1.Final</drools.version>
+        <drools.version>6.4.0.Final</drools.version>
     </properties>
 
     <dependencies>
@@ -63,6 +63,17 @@
     </dependencies>
 
     <build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+    
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

@@ -48,7 +48,7 @@ public class DroolsAnnotationProcessor {
         if (field.getType().equals(pl.maciejwalkowiak.drools.DroolsSession.class)) {
             toSet = droolsSession;
         } else {
-            toSet = droolsSession.getStatefulSession();
+            toSet = droolsSession.getSession();
         }
         return toSet;
     }

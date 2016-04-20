@@ -21,7 +21,7 @@ public class DroolsInjectorTest {
 
         catchException(new DroolsInjector()).initDrools(testClass);
 
-        assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("not found");
+        assertThat(caughtException()).isInstanceOf(RuntimeException.class).hasMessageContaining("Unable to get LastModified for ClasspathResource");
     }
 
     @Test
@@ -30,7 +30,7 @@ public class DroolsInjectorTest {
 
         catchException(new DroolsInjector()).initDrools(testClass);
 
-        assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("not found");
+        assertThat(caughtException()).isInstanceOf(RuntimeException.class).hasMessageContaining("Unable to get LastModified for ClasspathResource");
     }
 
     @Test
@@ -39,7 +39,7 @@ public class DroolsInjectorTest {
 
         catchException(new DroolsInjector()).initDrools(testClass);
 
-        assertThat(caughtException()).isInstanceOf(IllegalStateException.class).hasMessageContaining("errors in DRL files");
+        assertThat(caughtException()).isInstanceOf(RuntimeException.class).hasMessageContaining("There are errors in DRL files");
     }
 
     @DroolsFiles(value = "foo.drl", location = "/")
@@ -52,7 +52,7 @@ public class DroolsInjectorTest {
 
     }
 
-    @DroolsFiles(value = "rules-with-errors.drl", location = "/drl/")
+    @DroolsFiles(value = "rules-with-errors.drl", location = "drl/")
     private static class RulesWithErrorsTestClass {
 
     }
