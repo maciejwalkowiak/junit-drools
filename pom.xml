@@ -4,12 +4,12 @@
 
   <groupId>pl.maciejwalkowiak</groupId>
   <artifactId>junit-drools</artifactId>
-  <version>1.2.3</version>
+  <version>1.2.5</version>
   <name>junit-drools</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <drools.version>6.3.0.Final</drools.version>
+    <drools.version>6.4.0.Final</drools.version>
   </properties>
 
   <dependencies>
