@@ -1,9 +1,11 @@
 package pl.maciejwalkowiak.drools;
 
-import org.kie.internal.runtime.StatefulKnowledgeSession;
+import java.util.Collection;
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.StatelessKieSession;
 
 /**
- * Simplified interface of Drools {@link StatefulSession}
+ * Simplified interface of Drools session
  *
  * @author Maciej Walkowiak
  */
@@ -14,5 +16,10 @@ public interface DroolsSession {
 
     void insert(Object object);
 
-    StatefulKnowledgeSession getStatefulSession();
+    void execute(Object object);
+    void execute(Collection collection);
+    
+    KieSession getSession();
+    
+    StatelessKieSession getStatelessSession();
 }
