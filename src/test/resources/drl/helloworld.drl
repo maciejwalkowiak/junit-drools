@@ -1,4 +1,4 @@
-import pl.maciejwalkowiak.drools.Purchase;
+import pl.maciejwalkowiak.drools.model.Purchase;
 
 rule "Discount"
 dialect "mvel"
