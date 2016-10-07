@@ -1,19 +1,19 @@
 ##junit-drools##
 
-[![Build Status](https://drone.io/github.com/maciejwalkowiak/junit-drools/status.png)](https://drone.io/github.com/maciejwalkowiak/junit-drools/latest)
+[![Codeship Status for daveallie/junit-drools](https://img.shields.io/codeship/46577080-0c5e-0133-fbe0-46840019e268/master.svg)](https://codeship.com/projects/91062) ![Dependency Badge](https://www.versioneye.com/user/projects/55a3c7bc3239390018000717/badge.svg?style=flat) [![JitPack Link](https://img.shields.io/github/tag/daveallie/junit-drools.svg?label=JitPack)](https://jitpack.io/#daveallie/junit-drools/1.1.0)
 
 Tiny little library that helps you to unit test your Drools based business rules. Few simple annotations making Drools unit tests clean an easily maintainable.
 
 
 ### Preface ###
 
-Testing Drools rules can be annoying. Framework itself does not contain any helper classes or JUnit integrations that saves us from writing lots of boilerplate code in each test unit class. 
+Testing Drools rules can be annoying. Framework itself does not contain any helper classes or JUnit integrations that saves us from writing lots of boilerplate code in each test unit class.
 
 Example of Drools unit test taken from [Drools JBoss Rules 5.X Developer's Guide](https://code.google.com/p/droolsbook) - this it **NOT** how we want to write unit tests:
 
     public class ValidationTest {
       static StatelessKnowledgeSession session;
-      
+
       @BeforeClass
       public static void setUpClass() throws Exception {
         KnowledgeBuilder builder = KnowledgeBuilderFactory.newKnowledgeBuilder();
@@ -21,16 +21,16 @@ Example of Drools unit test taken from [Drools JBoss Rules 5.X Developer's Guide
         if (builder.hasErrors()) {
           throw new RuntimeException(builder.getErrors().toString());
         }
-        
+
         KnowledgeBaseConfiguration configuration = KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
         configuration.setOption(SequentialOption.YES);
-    
+
         KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase(configuration);
         knowledgeBase.addKnowledgePackages(builder.getKnowledgePackages());
-        
+
         session = knowledgeBase.newStatelessKnowledgeSession();
       }
-      
+
       ....
     }
 
@@ -51,7 +51,7 @@ I am not very experienced with Drools so the library actually does what was need
         <url>https://github.com/maciejwalkowiak/maven-repo/raw/releases/</url>
     </repository>
 ```
-        
+
 ```
     <dependency>
         <groupId>pl.maciejwalkowiak</groupId>
@@ -63,34 +63,34 @@ I am not very experienced with Drools so the library actually does what was need
 
 ### Usage ###
 
-**junit-drools** provides **DroolsJUnitRunner** class that handles most boilerplate code you need to write to set up knowledge base and Drools session. 
-    
-Lets consider following example:    
+**junit-drools** provides **DroolsJUnitRunner** class that handles most boilerplate code you need to write to set up knowledge base and Drools session.
+
+Lets consider following example:
 
     @RunWith(DroolsJUnitRunner.class)
     @DroolsFiles(value = "helloworld.drl", location = "/drl/")
     public class AppTest {
-    
+
         @DroolsSession
         StatefulSession session;
-    
+
         @Test
         public void should_set_discount() {
             Purchase purchase = new Purchase(new Customer(17));
-    
+
             session.insert(purchase);
             session.fireAllRules();
-    
+
             assertTrue(purchase.getTicket().isDiscount());
         }
-    
+
         @Test
         public void should_not_set_discount() {
             Purchase purchase = new Purchase(new Customer(22));
-    
+
             session.insert(purchase);
             session.fireAllRules();
-    
+
             assertFalse(purchase.getTicket().isDiscount());
         }
     }
@@ -110,23 +110,22 @@ In case you don't want to use DroolsJUnitRunner, for example because you already
     public class BeforeMethodBasedTest {
         @DroolsSession
         StatefulSession session;
-    
+
         @Before
         public void initDrools() throws Exception {
             new DroolsInjector().initDrools(this);
         }
-    
+
         @Test
         public void should_set_discount() {
             Purchase purchase = new Purchase(new Customer(17));
-    
+
             session.insert(purchase);
             session.fireAllRules();
-    
+
             assertTrue(purchase.getTicket().isDiscount());
         }
     }
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/maciejwalkowiak/junit-drools/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

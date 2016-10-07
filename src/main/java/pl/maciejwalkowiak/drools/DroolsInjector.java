@@ -1,86 +1,109 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.compiler.compiler.DroolsError;
-import org.drools.compiler.compiler.PackageBuilder;
-import org.drools.compiler.compiler.PackageBuilderErrors;
-import org.drools.core.RuleBase;
-import org.drools.core.RuleBaseFactory;
-import org.drools.core.StatefulSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
 
+import org.kie.api.KieServices;
+import org.kie.api.builder.KieBuilder;
+import org.kie.api.builder.KieFileSystem;
+import org.kie.api.builder.Message;
+import org.kie.api.builder.Message.Level;
+import org.kie.api.runtime.KieContainer;
+import org.kie.internal.io.ResourceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
+
 /**
- * Initializes Drools knowledge base and {@link StatefulSession} and injects them to test class
+ * Initializes Drools knowledge base and injects sessions to test class
  *
  * @author Maciej Walkowiak
  */
 public class DroolsInjector {
+
     private static final Logger LOG = LoggerFactory.getLogger(DroolsInjector.class);
 
+    private DroolsAnnotationProcessor annotationProcessor;
+    
     public void initDrools(Object testClass) throws Exception {
         if (testClass == null) {
-            throw new IllegalArgumentException("Test class cannot be null");
+           throw new IllegalArgumentException("Test class cannot be null");
         }
 
         LOG.info("Initializing Drools objects for test class: {}", testClass.getClass());
 
-        DroolsAnnotationProcessor annotationProcessor = new DroolsAnnotationProcessor(testClass);
+        annotationProcessor = new DroolsAnnotationProcessor(testClass);
         DroolsFiles droolsFiles = annotationProcessor.getDroolsFiles();
 
-        DroolsSession droolsSession = 
-          initKnowledgeBase(droolsFiles.location(), droolsFiles.dsl(), Arrays.asList(droolsFiles.value()));
+        KieContainer container
+                = initKnowledgeBase(droolsFiles.location(), droolsFiles.dsl(), Arrays.asList(droolsFiles.value()));
 
-        annotationProcessor.setDroolsSession(droolsSession);
+        annotationProcessor.setDroolsSession(container);
     }
+    
+    public void cleanupDrools() throws Exception {
+        annotationProcessor.disposeSession();
+    }
+    
+    private KieContainer initKnowledgeBase(String droolsLocation, String dsl, Iterable<String> fileNames) throws Exception {
 
-    private DroolsSession initKnowledgeBase(String droolsLocation, String dsl, Iterable<String> fileNames) throws Exception {
+        KieServices kieServices = KieServices.Factory.get();
+        KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
 
-        PackageBuilder builder = new PackageBuilder();
-
-        if(dsl == null || dsl.equals("")) {
+        if (dsl == null || dsl.equals("")) {
             LOG.info("Initializing knowledge base for drl files located in {} with names: {}", droolsLocation, fileNames);
             for (String fileName : fileNames) {
-                builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName));
+                kieFileSystem.write(
+                        ResourceFactory.newFileResource(loadDroolFileAsFile(droolsLocation, fileName)));
             }
         } else {
             LOG.info("Initializing knowledge base for drl files located in {} with dsl {}  with names: {}", droolsLocation, dsl, fileNames);
             for (String fileName : fileNames) {
-                builder.addPackageFromDrl(loadDroolFile(droolsLocation, fileName),
-                                          loadDroolFile(droolsLocation, dsl) );
+                kieFileSystem
+                        .write(
+                                ResourceFactory.newFileResource(loadDroolFileAsFile(droolsLocation, fileName)))
+                        .write(
+                                ResourceFactory.newFileResource(loadDroolFileAsFile(droolsLocation, dsl)));
             }
         }
-        PackageBuilderErrors errors = builder.getErrors();
+
+        KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem).buildAll();
 
         // Make sure that there are no errors in knowledge base
-        if (errors.getErrors().length > 0) {
-            LOG.error("Errors during loading DRL files");
+        if (kieBuilder.getResults().hasMessages(Level.ERROR)) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Errors during loading DRL files");
 
-            for (DroolsError error : errors.getErrors()) {
-                LOG.error("Error: {}", error.getMessage());
+                for (Message error : kieBuilder.getResults().getMessages(Level.ERROR)) {
+                    LOG.error("Error: {}", error);
+                }
             }
 
             throw new IllegalStateException("There are errors in DRL files");
         }
 
-        RuleBase ruleBase  = RuleBaseFactory.newRuleBase();
-        ruleBase.addPackage(builder.getPackage());
-
-        StatefulSession session = ruleBase.newStatefulSession(false);
-
-        return new DroolsSessionImpl(session);
+        KieContainer kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
+    	
+        return kieContainer;
     }
 
-    private InputStreamReader loadDroolFile(String droolsLocation, String filename) {
-        InputStream stream = getClass().getResourceAsStream(droolsLocation + filename);
-
-        if (stream == null) {
+    private File loadDroolFileAsFile(String droolsLocation, String filename) {
+        // Remove any leading / or \
+        if (droolsLocation != null && droolsLocation.matches("^[/\\\\]+.*")) {
+            droolsLocation = droolsLocation.replaceFirst("^[/\\\\]+", "");
+        }
+        
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(droolsLocation + filename);
+        
+        if (resource == null) {
             throw new IllegalArgumentException("File not found in location: " + droolsLocation + filename);
         }
-        return new InputStreamReader(stream);
+
+        File file = new File(resource.getFile());
+
+        return file;
     }
 }
