@@ -1,7 +1,6 @@
 package pl.maciejwalkowiak.drools;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -91,17 +90,19 @@ public class DroolsInjector {
     }
 
     private File loadDroolFileAsFile(String droolsLocation, String filename) {
-        URL resource = getClass().getResource(droolsLocation + filename);
+        // Remove any leading / or \
+        if (droolsLocation != null && droolsLocation.matches("^[/\\\\]+.*")) {
+            droolsLocation = droolsLocation.replaceFirst("^[/\\\\]+", "");
+        }
+        
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(droolsLocation + filename);
+        
         if (resource == null) {
             throw new IllegalArgumentException("File not found in location: " + droolsLocation + filename);
         }
 
-        File file = null;
-        try {
-            file = new File(resource.toURI());
-        } catch (URISyntaxException e) {
-            LOG.error(e.getMessage(), e);
-        }
+        File file = new File(resource.getFile());
 
         return file;
     }
