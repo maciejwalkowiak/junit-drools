@@ -1,17 +1,17 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.core.StatefulSession;
 import org.junit.Before;
 import org.junit.Test;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
 import pl.maciejwalkowiak.drools.annotations.DroolsSession;
 
 import static org.junit.Assert.assertTrue;
 
-@DroolsFiles(value = "helloworld.drl", location = "/drl/")
+@DroolsFiles(value = "helloworld.drl", location = "drl/")
 public class BeforeMethodBasedTest {
     @DroolsSession
-    StatefulSession session;
+    StatefulKnowledgeSession session;
 
     @Before
     public void initDrools() throws Exception {
@@ -25,6 +25,8 @@ public class BeforeMethodBasedTest {
         session.insert(purchase);
         session.fireAllRules();
 
+        System.out.println("isDiscount?: " + purchase.getTicket().isDiscount());
+        
         assertTrue(purchase.getTicket().isDiscount());
     }
 }

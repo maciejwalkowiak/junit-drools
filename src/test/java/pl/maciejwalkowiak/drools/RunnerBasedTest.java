@@ -1,19 +1,20 @@
 package pl.maciejwalkowiak.drools;
 
-import org.drools.core.StatefulSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
 import pl.maciejwalkowiak.drools.annotations.DroolsSession;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(DroolsJUnitRunner.class)
-@DroolsFiles(value = "helloworld.drl", location = "/drl/")
+@DroolsFiles(value = "helloworld.drl", location = "drl/")
 public class RunnerBasedTest {
 
     @DroolsSession
-    StatefulSession session;
+    StatefulKnowledgeSession session;
 
     @Test
     public void should_set_discount() {
