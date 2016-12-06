@@ -12,7 +12,7 @@ Testing Drools rules can be annoying. Framework itself does not contain any help
 Example of Drools unit test taken from [Drools JBoss Rules 5.X Developer's Guide](https://code.google.com/p/droolsbook) - this it **NOT** how we want to write unit tests:
 
     public class ValidationTest {
-      static StatelessKnowledgeSession session;
+      static StatefulKnowledgeSession session;
       
       @BeforeClass
       public static void setUpClass() throws Exception {
@@ -28,7 +28,7 @@ Example of Drools unit test taken from [Drools JBoss Rules 5.X Developer's Guide
         KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase(configuration);
         knowledgeBase.addKnowledgePackages(builder.getKnowledgePackages());
         
-        session = knowledgeBase.newStatelessKnowledgeSession();
+        session = knowledgeBase.newStatefulKnowledgeSession();
       }
       
       ....

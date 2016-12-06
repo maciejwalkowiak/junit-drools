@@ -1,23 +1,22 @@
 package pl.maciejwalkowiak.drools;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-
 import org.kie.api.io.ResourceType;
 import org.kie.internal.builder.KnowledgeBuilder;
 import org.kie.internal.builder.KnowledgeBuilderError;
 import org.kie.internal.builder.KnowledgeBuilderErrors;
 import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.io.ResourceFactory;
-import org.kie.internal.runtime.StatelessKnowledgeSession;
+import org.kie.internal.runtime.StatefulKnowledgeSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import pl.maciejwalkowiak.drools.annotations.DroolsFiles;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+
 /**
- * Initializes Drools knowledge base and {@link StatefulSession} and injects them to test class
+ * Initializes Drools knowledge base and {@link StatefulKnowledgeSession} and injects them to test class
  *
  * @author Maciej Walkowiak
  */
@@ -66,7 +65,7 @@ public class DroolsInjector {
             throw new IllegalStateException("There are errors in DRL files");
         }
 
-        StatelessKnowledgeSession session = kbuilder.newKnowledgeBase().newStatelessKnowledgeSession();
+        StatefulKnowledgeSession session = kbuilder.newKnowledgeBase().newStatefulKnowledgeSession();
 
         return new DroolsSessionImpl(session);
     }
