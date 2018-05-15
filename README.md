@@ -1,11 +1,11 @@
-##junit-drools##
+## junit-drools 
 
-[![Build Status](https://drone.io/github.com/maciejwalkowiak/junit-drools/status.png)](https://drone.io/github.com/maciejwalkowiak/junit-drools/latest)
+**Unfortunately due to the lack of time I am not able to continue developing and maintaining `junit-drools` project. Thank you for your contributions and support, I hope you will find one of the forks still maintained and helpful!**
 
 Tiny little library that helps you to unit test your Drools based business rules. Few simple annotations making Drools unit tests clean an easily maintainable.
 
 
-### Preface ###
+### Preface
 
 Testing Drools rules can be annoying. Framework itself does not contain any helper classes or JUnit integrations that saves us from writing lots of boilerplate code in each test unit class. 
 
@@ -39,7 +39,7 @@ Example of Drools unit test taken from [Drools JBoss Rules 5.X Developer's Guide
 
 I am not very experienced with Drools so the library actually does what was needed in project I was working with. You are welcome to add your improvements by sending pull requests.
 
-### Installation ###
+### Installation
 
 1. Clone git repository: `git clone https://github.com/maciejwalkowiak/junit-drools.git`
 2. Build & install: `mvn clean install`
@@ -61,7 +61,7 @@ I am not very experienced with Drools so the library actually does what was need
     </dependency>
 ```
 
-### Usage ###
+### Usage
 
 **junit-drools** provides **DroolsJUnitRunner** class that handles most boilerplate code you need to write to set up knowledge base and Drools session. 
     
